@@ -1,9 +1,32 @@
 const path = require('path')
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  createPage({
-    path: '/somefakepage',
-    component: path.resolve('./src/components/postLayout.js')
+  return new Promise((resolve, reject) => {
+    graphql(`
+      {
+        allMarkdownRemark {
+          edges {
+            node {
+              frontmatter {
+                slug
+              }
+            }
+          }
+        }
+      }
+    `).then(({ data: { allMarkdownRemark: { edges } } }) => {
+      const posts = edges
+      posts.forEach(({ node: { frontmatter: { slug } } }) => {
+        createPage({
+          path: `/posts${slug}`,
+          component: path.resolve(`${__dirname}/src/components/postLayout.js`),
+          context: {
+            slug
+          }
+        })
+      })
+      resolve()
+    })
   })
 }
