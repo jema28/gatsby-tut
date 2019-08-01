@@ -1,5 +1,16 @@
 import React from 'react'
 import { useStaticQuery, graphql, Link } from 'gatsby'
+import styled from 'styled-components'
+
+const ArchiveList = styled.ul`
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  a {
+    font-size: 0.75rem;
+    color: #524763;
+  }
+`
 
 const Archive = () => {
   const archivePostQuery = useStaticQuery(graphql`
@@ -25,13 +36,13 @@ const Archive = () => {
     <>
       <aside>
         <h3>Archive</h3>
-        <ul>
+        <ArchiveList>
           {posts.map(({ node: { frontmatter: { title, slug } } }) => (
             <Link to={`posts${slug}`} key={slug}>
               <li>{title}</li>
             </Link>
           ))}
-        </ul>
+        </ArchiveList>
       </aside>
     </>
   )
