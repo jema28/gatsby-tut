@@ -1,0 +1,16 @@
+{
+  "extends": ["eslint-config-wesbos"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "semi": false
+      }
+    ],
+    "no-console": "warn",
+    "consistent-return": "off",
+    "prefer-destructuring": ["error", { "object": true, "array": false }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val|err" }]
+  }
+}
